@@ -1,12 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Racing</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .car {
+            width: 50px;
+            height: 90px;
+            background: blue;
+            position: absolute;
+            top: 350px;
+        }
+
+        .gamingArea {
+            margin: auto;
+            width: 500px;
+            height: 100vh;
+            background-color: rgb(48, 37, 37);
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
 </head>
+
 <body>
     <div class="carGame">
         <div class="score">
@@ -15,10 +43,10 @@
                 <p>Use arrows for movement</p>
             </div>
         </div>
-        <div class="gamingArea">
-                test
+        <div class="gamingArea hide">
         </div>
     </div>
     <script src="main.js"></script>
 </body>
+
 </html>
