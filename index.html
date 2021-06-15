@@ -16,12 +16,40 @@
             display: none;
         }
 
+        .trackLine {
+            width: 15px;
+            margin-left: 235px;
+            height: 90px;
+            background-color: white;
+            position: absolute;
+        }
+
+        .enemyCars {
+            width: 50px;
+            height: 90px;
+            background: red;
+            position: absolute;
+        }
+
         .car {
             width: 50px;
             height: 90px;
             background: blue;
             position: absolute;
-            top: 350px;
+            top: 450px;
+        }
+
+        .score {
+            position: absolute;
+            top: 20px;
+            left: 50px;
+            width: 150px;
+            line-height: 50px;
+            text-align: center;
+            border-radius: 5px;
+            background-color:gray;
+            font-weight: bold;
+            color: white;
         }
 
         .gamingArea {
@@ -32,18 +60,36 @@
             position: relative;
             overflow: hidden;
         }
+
+        .startPlaying {
+            position: absolute;
+            background-color: goldenrod;
+            top: 50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 5px;
+            z-index: 1;  
+            text-transform: uppercase;
+        }
+        .gamingArea{
+            
+        }
     </style>
 </head>
 
 <body>
     <div class="carGame">
-        <div class="score">
-            <div class="startPlaying">
-                <p>Start</p>
-                <p>Use arrows for movement</p>
-            </div>
+        <div class="score"> </div>
+        <div class="startPlaying">
+            <p>Start</p>
+            <p>Use arrows for movement</p>
         </div>
-        <div class="gamingArea hide">
+        <div class="gamingArea">
         </div>
     </div>
     <script src="main.js"></script>
