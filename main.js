@@ -2,7 +2,13 @@ const score = document.querySelector('.score');
 const startPlaying = document.querySelector('.startPlaying');
 const gamingArea = document.querySelector('.gamingArea');
 // const coinCount = document.querySelector('.coin');
+let coinTouch = new Audio();
+let carCrash = new Audio();
+let carRace = new Audio();
 
+coinTouch.src = "sound/coin.mp3";
+carCrash.src = "sound/crash.wav";
+carRace.src = "sound/racing.wav";
 
 startPlaying.addEventListener('click', startGame);
 
@@ -49,7 +55,7 @@ function moveLine() {
   })
 }
 
-function coinCount(car,coin){
+function coinCount(car, coin) {
   carRect = car.getBoundingClientRect();
   coinRect = coin.getBoundingClientRect();
 
@@ -64,12 +70,13 @@ function coin(car) {
   let coins = document.querySelectorAll('.coin')
   coins.forEach(function (coin) {
 
-    if (coinCount(car,coin)){
-        coin.parentElement.removeChild(coin);
-        player.coin = player.coin +1;
+    if (coinCount(car, coin)) {
+      coin.parentElement.removeChild(coin);
+      player.coin = player.coin + 1;
+      coinTouch.play();
     }
-    if (coin.y >= 700) {
-      coin.y = coin.y -700;
+    if (coin.y >= 800) {
+      coin.y = coin.y - 700;
       coin.style.left = Math.floor(Math.random() * 290) + "px";
     }
 
@@ -88,6 +95,7 @@ function moveEnemyCar(car) {
   enemyCars.forEach(function (enemyCar) {
 
     if (isCollide(car, enemyCar)) {
+      carCrash.play();
       endGame();
     }
 
@@ -123,7 +131,7 @@ function playGame() {
     if (keys.ArrowDown && player.y < track.bottom - 90) { player.y = player.y + player.speed }
     if (keys.ArrowRight && player.x < 450) { player.x = player.x + player.speed }
     if (keys.ArrowLeft && player.x > 0) { player.x = player.x - player.speed }
-
+    carRace.play();
     car.style.top = player.y + "px";
     car.style.left = player.x + "px";
 
@@ -161,7 +169,16 @@ function startGame() {
   player.y = car.offsetTop;
   player.x = car.offsetLeft;
 
-  for (i = 0; i < 3; i++) {
+  for (i = 0; i < 10; i++) {
+    let coin = document.createElement('div');
+    coin.setAttribute('class', 'coin');
+    coin.y = ((i + 1) * 150) * -1;
+    coin.style.top = coin.y + "px";
+    coin.style.left = Math.floor(Math.random() * 290) + "px";
+    gamingArea.appendChild(coin);
+  }
+
+  for (i = 0; i < 4; i++) {
     let enemyCars = document.createElement('div');
     enemyCars.setAttribute('class', 'enemyCars');
     enemyCars.y = ((i + 1) * 350) * -1;
@@ -171,14 +188,6 @@ function startGame() {
     gamingArea.appendChild(enemyCars);
   }
 
-  for (i = 0; i < 10; i++) {
-    let coin = document.createElement('div');
-    coin.setAttribute('class', 'coin');
-    coin.y = ((i + 1) * 150) * -1;
-    coin.style.top = coin.y + "px";
-    coin.style.left = Math.floor(Math.random() * 290) + "px";
-    gamingArea.appendChild(coin);
-  }
 
 
 }
