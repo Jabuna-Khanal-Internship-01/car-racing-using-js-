@@ -12,6 +12,15 @@
             padding: 0px;
         }
 
+        .carGame{
+            width:100%;
+            height:100vh;
+            background-image: url('bg.jpg');
+            background-repeat: no-repeat;
+            background-size:100% 100% ;
+            opacity: 0.9;
+
+        } 
         .hide {
             display: none;
         }
@@ -24,30 +33,36 @@
             position: absolute;
         }
 
-        .enemyCars {
+        .car, .enemyCars {
             width: 50px;
-            height: 90px;
-            background: red;
-            position: absolute;
-        }
-
-        .car {
-            width: 50px;
-            height: 90px;
-            background: blue;
+            height: 50px;
             position: absolute;
             top: 450px;
+            background-image: url('car.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+
+        }
+        .coin{
+            width:30px;
+            height:30px;
+            position: absolute;
+            background-color: gold;
+            border-radius: 50%;
+            background-image: url('coin.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
         }
 
         .score {
             position: absolute;
             top: 20px;
             left: 50px;
-            width: 150px;
+            width: 300px;
             line-height: 50px;
             text-align: center;
             border-radius: 5px;
-            background-color:gray;
+            background-color: gray;
             font-weight: bold;
             color: white;
         }
@@ -59,25 +74,24 @@
             background-color: rgb(48, 37, 37);
             position: relative;
             overflow: hidden;
+            border-right:5px dashed white;
+            border-left:5px dashed white ;
         }
 
         .startPlaying {
             position: absolute;
             background-color: goldenrod;
             top: 50%;
-            left:50%;
-            transform: translate(-50%,-50%);
+            left: 50%;
+            transform: translate(-50%, -50%);
             color: white;
             text-align: center;
             padding: 10px;
             cursor: pointer;
             font-size: 20px;
             border-radius: 5px;
-            z-index: 1;  
+            z-index: 1;
             text-transform: uppercase;
-        }
-        .gamingArea{
-            
         }
     </style>
 </head>
@@ -85,9 +99,11 @@
 <body>
     <div class="carGame">
         <div class="score"> </div>
+        
         <div class="startPlaying">
             <p>Start</p>
             <p>Use arrows for movement</p>
+            <p>Click here to restart</p>
         </div>
         <div class="gamingArea">
         </div>

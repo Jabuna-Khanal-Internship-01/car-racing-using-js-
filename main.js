@@ -1,12 +1,12 @@
 const score = document.querySelector('.score');
 const startPlaying = document.querySelector('.startPlaying');
-const gamingArea = document.querySelector('.gamingArea')
+const gamingArea = document.querySelector('.gamingArea');
+// const coinCount = document.querySelector('.coin');
 
 
 startPlaying.addEventListener('click', startGame);
 
-let player = { speed: 5, score: 0 };
-
+let player = { speed: 7, score: 0, coin: 0 };
 
 let keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false }
 
@@ -23,7 +23,7 @@ function keyReleased(e) {
   keys[e.key] = false;
 }
 
-function isCollide(car, enemyCar) { 
+function isCollide(car, enemyCar) {
   carRect = car.getBoundingClientRect();
   enemyCarRect = enemyCar.getBoundingClientRect();
 
@@ -49,11 +49,38 @@ function moveLine() {
   })
 }
 
-function endGame(){
-  player.startGame =false;
-  startPlaying.classList.remove('hide');
+function coinCount(car,coin){
+  carRect = car.getBoundingClientRect();
+  coinRect = coin.getBoundingClientRect();
 
+  return !((carRect.top > coinRect.bottom) ||
+    (carRect.bottom < coinRect.top) ||
+    (carRect.left > coinRect.right) ||
+    (carRect.right < coinRect.left))
 }
+
+
+function coin(car) {
+  let coins = document.querySelectorAll('.coin')
+  coins.forEach(function (coin) {
+
+    if (coinCount(car,coin)){
+        coin.parentElement.removeChild(coin);
+        player.coin = player.coin +1;
+    }
+    if (coin.y >= 700) {
+      coin.y = coin.y -700;
+      coin.style.left = Math.floor(Math.random() * 290) + "px";
+    }
+
+    coin.y = coin.y + player.speed;
+    coin.style.top = coin.y + "px";
+
+  })
+}
+
+
+
 
 
 function moveEnemyCar(car) {
@@ -61,7 +88,7 @@ function moveEnemyCar(car) {
   enemyCars.forEach(function (enemyCar) {
 
     if (isCollide(car, enemyCar)) {
-        endGame();
+      endGame();
     }
 
     if (enemyCar.y >= 800) {
@@ -76,6 +103,11 @@ function moveEnemyCar(car) {
 }
 
 
+function endGame() {
+  player.startGame = false;
+  startPlaying.classList.remove('hide');
+
+}
 
 function playGame() {
   let car = document.querySelector('.car');
@@ -84,6 +116,7 @@ function playGame() {
   if (player.startGame) {
 
     moveLine();
+    coin(car);
     moveEnemyCar(car);
 
     if (keys.ArrowUp && player.y > track.top + 20) { player.y = player.y - player.speed }
@@ -97,17 +130,18 @@ function playGame() {
     window.requestAnimationFrame(playGame);
     player.score++;
 
-    score.innerText = "Score:" + player.score 
-     
+    score.innerText = "Score:" + player.score + "Coin:" + player.coin;
+
 
   }
 }
 
 function startGame() {
   startPlaying.classList.add('hide');
-  gamingArea.innerHTML ="   "
+  gamingArea.innerHTML = "   "
   player.startGame = true;
   player.score = 0;
+  player.coin = 0;
   window.requestAnimationFrame(playGame);
 
   for (i = 0; i < 5; i++) {
@@ -132,10 +166,27 @@ function startGame() {
     enemyCars.setAttribute('class', 'enemyCars');
     enemyCars.y = ((i + 1) * 350) * -1;
     enemyCars.style.top = enemyCars.y + "px";
+    enemyCars.style.backgroundColor = randomColor();
     enemyCars.style.left = Math.floor(Math.random() * 390) + "px";
     gamingArea.appendChild(enemyCars);
   }
 
+  for (i = 0; i < 10; i++) {
+    let coin = document.createElement('div');
+    coin.setAttribute('class', 'coin');
+    coin.y = ((i + 1) * 150) * -1;
+    coin.style.top = coin.y + "px";
+    coin.style.left = Math.floor(Math.random() * 290) + "px";
+    gamingArea.appendChild(coin);
+  }
 
 
+}
+
+function randomColor() {
+  function color() {
+    let hex = Math.floor(Math.random() * 255).toString(16);
+    return ("0" + String(hex)).substr(-2);
+  }
+  return "#" + color() + color() + color();
 }
