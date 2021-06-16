@@ -12,7 +12,7 @@ carRace.src = "sound/racing.wav";
 
 startPlaying.addEventListener('click', startGame);
 
-let player = { speed: 7, score: 0, coin: 0 };
+let player = { speed:5, score: 0, coin: 0 };
 
 let keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false }
 
@@ -65,7 +65,6 @@ function coinCount(car, coin) {
     (carRect.right < coinRect.left))
 }
 
-
 function coin(car) {
   let coins = document.querySelectorAll('.coin')
   coins.forEach(function (coin) {
@@ -85,9 +84,6 @@ function coin(car) {
 
   })
 }
-
-
-
 
 
 function moveEnemyCar(car) {
@@ -120,7 +116,6 @@ function endGame() {
 function playGame() {
   let car = document.querySelector('.car');
   let track = gamingArea.getBoundingClientRect();
-  // console.log(track);
   if (player.startGame) {
 
     moveLine();
@@ -137,8 +132,10 @@ function playGame() {
 
     window.requestAnimationFrame(playGame);
     player.score++;
-
-    score.innerText = "Score:" + player.score + "Coin:" + player.coin;
+    score.innerText = "Score:" + player.score  + "Coin:" + player.coin;
+    if(player.score >=1000){
+      player.speed = 7;
+    }
 
 
   }
@@ -169,7 +166,7 @@ function startGame() {
   player.y = car.offsetTop;
   player.x = car.offsetLeft;
 
-  for (i = 0; i < 10; i++) {
+  for (i = 0; i < 50; i++) {
     let coin = document.createElement('div');
     coin.setAttribute('class', 'coin');
     coin.y = ((i + 1) * 150) * -1;
@@ -183,19 +180,8 @@ function startGame() {
     enemyCars.setAttribute('class', 'enemyCars');
     enemyCars.y = ((i + 1) * 350) * -1;
     enemyCars.style.top = enemyCars.y + "px";
-    enemyCars.style.backgroundColor = randomColor();
     enemyCars.style.left = Math.floor(Math.random() * 390) + "px";
     gamingArea.appendChild(enemyCars);
   }
 
-
-
-}
-
-function randomColor() {
-  function color() {
-    let hex = Math.floor(Math.random() * 255).toString(16);
-    return ("0" + String(hex)).substr(-2);
-  }
-  return "#" + color() + color() + color();
 }
